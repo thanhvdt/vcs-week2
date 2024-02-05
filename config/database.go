@@ -7,11 +7,11 @@ import (
 )
 
 const (
-	host     = "192.168.245.128"
-	port     = 5432
+	host     = "localhost"
+	port     = 55432
 	user     = "postgres"
-	password = "1234"
-	dbName   = "vcs"
+	password = "postgres"
+	dbName   = "northwind"
 )
 
 func ConnectDatabase() *gorm.DB {

@@ -1,8 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"github.com/go-playground/validator/v10"
+	"github.com/rs/zerolog/log"
 	"github.com/thanhvdt/vcs-week2/config"
+	"github.com/thanhvdt/vcs-week2/controller"
+	"github.com/thanhvdt/vcs-week2/model"
+	"github.com/thanhvdt/vcs-week2/repository"
+	"github.com/thanhvdt/vcs-week2/service"
 	"gorm.io/gorm"
 	"net/http"
 )
@@ -14,30 +20,29 @@ type Product struct {
 }
 
 func main() {
-	//Database connection
+	log.Info().Msg("Server Started!")
 	db := config.ConnectDatabase()
-	err := db.AutoMigrate(&Product{})
-	if err != nil {
-		return
+	validate := validator.New()
+
+	customerRepository := repository.NewCustomerRepository(db)
+	customerService := service.NewCustomerService(customerRepository, validate)
+	customerController := controller.NewCustomerController(customerService)
+	routes := NewRouter(customerController)
+
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: routes,
 	}
-	router := gin.Default()
-
-	router.GET("", func(context *gin.Context) {
-		context.JSON(http.StatusOK, "welcome home")
-	})
-
-	//server := &http.Server{
-	//	Addr:           ":8888",
-	//	Handler:        routes,
-	//	ReadTimeout:    10 * time.Second,
-	//	WriteTimeout:   10 * time.Second,
-	//	MaxHeaderBytes: 1 << 20,
-	//}
-	//
-	//err = server.ListenAndServe()
-
-	err = router.Run(":8080")
+	err := server.ListenAndServe()
 	if err != nil {
-		panic(err)
+		log.Fatal().Err(err).Msg("Server Stopped")
+	}
+
+	var customer model.Customer
+	result := db.First(&customer)
+	if result.Error != nil {
+		fmt.Println(result.Error)
+	} else {
+		fmt.Println("Connected successfully, first customer:", customer)
 	}
 }
