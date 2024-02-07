@@ -9,15 +9,8 @@ import (
 	"github.com/thanhvdt/vcs-week2/model"
 	"github.com/thanhvdt/vcs-week2/repository"
 	"github.com/thanhvdt/vcs-week2/service"
-	"gorm.io/gorm"
 	"net/http"
 )
-
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
 
 func main() {
 	log.Info().Msg("Server Started!")
@@ -27,6 +20,11 @@ func main() {
 	customerRepository := repository.NewCustomerRepository(db)
 	customerService := service.NewCustomerService(customerRepository, validate)
 	customerController := controller.NewCustomerController(customerService)
+
+	categoryRepository := repository.NewCategoryRepository(db)
+	categoryService := service.NewCategoryService(categoryRepository)
+	customerController := controller.NewCustomerController(customerService)
+
 	routes := NewRouter(customerController)
 
 	server := &http.Server{

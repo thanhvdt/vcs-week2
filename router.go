@@ -2,15 +2,24 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/thanhvdt/vcs-week2/controller"
 )
 
-func NewRouter(c *controller.CustomerController) *gin.Engine {
+func NewRouter(c *Controllers) *gin.Engine {
 	router := gin.Default()
-	router.GET("/customers", c.ReadAllCustomer)
-	router.GET("/customers/:customerID", c.ReadCustomerByID)
-	router.POST("/customers", c.CreateCustomer)
-	router.PUT("/customers/:customerID", c.UpdateCustomer)
-	router.DELETE("/customers/:customerID", c.DeleteCustomer)
+
+	customers := router.Group("/customers")
+	{
+		customers.GET("", c.CustomerController.ReadAllCustomer)
+		customers.GET("/:customerID", c.CustomerController.ReadCustomerByID)
+		customers.POST("", c.CustomerController.CreateCustomer)
+		customers.PUT("/:customerID", c.CustomerController.UpdateCustomer)
+		customers.DELETE("/:customerID", c.CustomerController.DeleteCustomer)
+	}
+
+	categories := router.Group("/categories")
+	{
+		categories.GET("", c.CategoryController.ReadAllCategory)
+	}
+
 	return router
 }

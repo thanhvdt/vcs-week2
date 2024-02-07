@@ -25,8 +25,8 @@ func (c *CustomerController) CreateCustomer(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	customer, err := c.CustomerService.Create(createCustomerRequest)
-	if err != nil {
+	customer, er := c.CustomerService.Create(createCustomerRequest)
+	if er != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -82,8 +82,8 @@ func (c *CustomerController) UpdateCustomer(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	customer, err := c.CustomerService.Update(customerID, updateCustomerRequest)
-	if err != nil {
+	customer, er := c.CustomerService.Update(customerID, updateCustomerRequest)
+	if er != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
