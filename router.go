@@ -19,6 +19,10 @@ func NewRouter(c *Controllers) *gin.Engine {
 	categories := router.Group("/categories")
 	{
 		categories.GET("", c.CategoryController.ReadAllCategory)
+		categories.GET("/:categoryID", c.CategoryController.ReadCategoryByID)
+		categories.POST("", c.CategoryController.CreateCategory)
+		categories.PUT("", c.CategoryController.UpdateCategory)
+		categories.DELETE("/:categoryID", c.CategoryController.DeleteCategory)
 	}
 
 	return router

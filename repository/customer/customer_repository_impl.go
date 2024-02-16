@@ -1,4 +1,4 @@
-package repository
+package customer
 
 import (
 	"github.com/thanhvdt/vcs-week2/model"

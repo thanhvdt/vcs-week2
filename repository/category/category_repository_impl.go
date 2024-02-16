@@ -1,19 +1,19 @@
-package service
+package category
 
 import (
 	"github.com/thanhvdt/vcs-week2/model"
 	"gorm.io/gorm"
 )
 
-type CategoryServiceImpl struct {
+type CategoryRepositoryImpl struct {
 	Db *gorm.DB
 }
 
-func NewCategoryService(db *gorm.DB) *CategoryServiceImpl {
-	return &CategoryServiceImpl{Db: db}
+func NewCategoryRepository(db *gorm.DB) *CategoryRepositoryImpl {
+	return &CategoryRepositoryImpl{Db: db}
 }
 
-func (c *CategoryServiceImpl) Create(category *model.Category) (*model.Category, error) {
+func (c *CategoryRepositoryImpl) Save(category *model.Category) (*model.Category, error) {
 	err := c.Db.Create(category).Error
 	if err != nil {
 		return nil, err
@@ -21,7 +21,7 @@ func (c *CategoryServiceImpl) Create(category *model.Category) (*model.Category,
 	return category, nil
 }
 
-func (c *CategoryServiceImpl) ReadAll() ([]model.Category, error) {
+func (c *CategoryRepositoryImpl) FindAll() ([]model.Category, error) {
 	var categories []model.Category
 	err := c.Db.Find(&categories).Error
 	if err != nil {
@@ -30,7 +30,7 @@ func (c *CategoryServiceImpl) ReadAll() ([]model.Category, error) {
 	return categories, nil
 }
 
-func (c *CategoryServiceImpl) ReadByID(categoryID string) (*model.Category, error) {
+func (c *CategoryRepositoryImpl) FindByID(categoryID string) (*model.Category, error) {
 	var category model.Category
 	err := c.Db.Where("category_id = ?", categoryID).First(&category).Error
 	if err != nil {
@@ -39,7 +39,7 @@ func (c *CategoryServiceImpl) ReadByID(categoryID string) (*model.Category, erro
 	return &category, nil
 }
 
-func (c *CategoryServiceImpl) Update(category *model.Category) (*model.Category, error) {
+func (c *CategoryRepositoryImpl) Update(category *model.Category) (*model.Category, error) {
 	err := c.Db.Save(category).Error
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (c *CategoryServiceImpl) Update(category *model.Category) (*model.Category,
 	return category, nil
 }
 
-func (c *CategoryServiceImpl) Delete(categoryID string) error {
+func (c *CategoryRepositoryImpl) Delete(categoryID string) error {
 	var category model.Category
 	err := c.Db.Where("category_id = ?", categoryID).Delete(&category).Error
 	if err != nil {

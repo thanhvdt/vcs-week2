@@ -7,8 +7,10 @@ import (
 	"github.com/thanhvdt/vcs-week2/config"
 	"github.com/thanhvdt/vcs-week2/controller"
 	"github.com/thanhvdt/vcs-week2/model"
-	"github.com/thanhvdt/vcs-week2/repository"
-	"github.com/thanhvdt/vcs-week2/service"
+	"github.com/thanhvdt/vcs-week2/repository/category"
+	"github.com/thanhvdt/vcs-week2/repository/customer"
+	category2 "github.com/thanhvdt/vcs-week2/service/category"
+	customer2 "github.com/thanhvdt/vcs-week2/service/customer"
 	"net/http"
 )
 
@@ -17,15 +19,19 @@ func main() {
 	db := config.ConnectDatabase()
 	validate := validator.New()
 
-	customerRepository := repository.NewCustomerRepository(db)
-	customerService := service.NewCustomerService(customerRepository, validate)
+	customerRepository := customer.NewCustomerRepository(db)
+	customerService := customer2.NewCustomerService(customerRepository, validate)
 	customerController := controller.NewCustomerController(customerService)
 
-	categoryRepository := repository.NewCategoryRepository(db)
-	categoryService := service.NewCategoryService(categoryRepository)
-	customerController := controller.NewCustomerController(customerService)
+	categoryRepository := category.NewCategoryRepository(db)
+	categoryService := category2.NewCategoryService(categoryRepository, validate)
+	categoryController := controller.NewCategoryController(categoryService)
 
-	routes := NewRouter(customerController)
+	controllers := &Controllers{
+		CustomerController: customerController,
+		CategoryController: categoryController,
+	}
+	routes := NewRouter(controllers)
 
 	server := &http.Server{
 		Addr:    ":8080",

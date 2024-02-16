@@ -1,4 +1,4 @@
-package service
+package category
 
 import "github.com/thanhvdt/vcs-week2/model"
 

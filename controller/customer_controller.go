@@ -3,23 +3,23 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/thanhvdt/vcs-week2/data/request"
+	customer2 "github.com/thanhvdt/vcs-week2/data/request/customer"
 	"github.com/thanhvdt/vcs-week2/data/response"
-	"github.com/thanhvdt/vcs-week2/service"
+	"github.com/thanhvdt/vcs-week2/service/customer"
 	"net/http"
 )
 
 type CustomerController struct {
-	CustomerService service.CustomerService
+	CustomerService customer.CustomerService
 }
 
-func NewCustomerController(customerService service.CustomerService) *CustomerController {
+func NewCustomerController(customerService customer.CustomerService) *CustomerController {
 	return &CustomerController{CustomerService: customerService}
 }
 
 func (c *CustomerController) CreateCustomer(ctx *gin.Context) {
 	log.Info().Msg("Creating Customer")
-	var createCustomerRequest = request.CreateCustomerRequest{}
+	var createCustomerRequest = customer2.CreateCustomerRequest{}
 	err := ctx.ShouldBindJSON(&createCustomerRequest)
 	if err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
@@ -76,7 +76,7 @@ func (c *CustomerController) ReadCustomerByID(ctx *gin.Context) {
 func (c *CustomerController) UpdateCustomer(ctx *gin.Context) {
 	log.Info().Msg("Updating Customer")
 	customerID := ctx.Param("customerID")
-	var updateCustomerRequest = request.UpdateCustomerRequest{}
+	var updateCustomerRequest = customer2.UpdateCustomerRequest{}
 	err := ctx.ShouldBindJSON(&updateCustomerRequest)
 	if err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})

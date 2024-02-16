@@ -4,25 +4,26 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"github.com/thanhvdt/vcs-week2/model"
-	"github.com/thanhvdt/vcs-week2/service"
+	"github.com/thanhvdt/vcs-week2/service/category"
 )
 
 type CategoryController struct {
-	categoryService service.CategoryService
+	categoryService category.CategoryService
 }
 
-func NewCategoryController(categoryService service.CategoryService) *CategoryController {
+func NewCategoryController(categoryService category.CategoryService) *CategoryController {
 	return &CategoryController{categoryService: categoryService}
 }
 
 func (c *CategoryController) CreateCategory(ctx *gin.Context) {
 	log.Info().Msg("Creating Category")
-	err := ctx.ShouldBindJSON(&model.Category{})
+	createCategory := model.Category{}
+	err := ctx.ShouldBindJSON(&createCategory)
 	if err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	category, er := c.categoryService.Create(&model.Category{})
+	category, er := c.categoryService.Create(&createCategory)
 	if er != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return
@@ -71,12 +72,13 @@ func (c *CategoryController) ReadCategoryByID(ctx *gin.Context) {
 
 func (c *CategoryController) UpdateCategory(ctx *gin.Context) {
 	log.Info().Msg("Updating Category")
-	err := ctx.ShouldBindJSON(&model.Category{})
+	updateCategory := model.Category{}
+	err := ctx.ShouldBindJSON(&updateCategory)
 	if err != nil {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	category, er := c.categoryService.Update(&model.Category{})
+	category, er := c.categoryService.Update(&updateCategory)
 	if er != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return

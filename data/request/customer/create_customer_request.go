@@ -1,4 +1,4 @@
-package request
+package customer
 
 type CreateCustomerRequest struct {
 	CustomerID   string `json:"customer_id" validate:"required"`

@@ -1,4 +1,4 @@
-package request
+package customer
 
 type UpdateCustomerRequest struct {
 	CompanyName  string `json:"company_name" validate:"required"`

@@ -1,23 +1,23 @@
-package service
+package customer
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/thanhvdt/vcs-week2/data/request"
+	customer2 "github.com/thanhvdt/vcs-week2/data/request/customer"
 	"github.com/thanhvdt/vcs-week2/data/response"
 	"github.com/thanhvdt/vcs-week2/model"
-	"github.com/thanhvdt/vcs-week2/repository"
+	"github.com/thanhvdt/vcs-week2/repository/customer"
 )
 
 type CustomerServiceImpl struct {
-	CustomerRepository repository.CustomerRepository
+	CustomerRepository customer.CustomerRepository
 	Validate           *validator.Validate
 }
 
-func NewCustomerService(customerRepository repository.CustomerRepository, validate *validator.Validate) *CustomerServiceImpl {
+func NewCustomerService(customerRepository customer.CustomerRepository, validate *validator.Validate) *CustomerServiceImpl {
 	return &CustomerServiceImpl{CustomerRepository: customerRepository, Validate: validate}
 }
 
-func (c *CustomerServiceImpl) Create(customer request.CreateCustomerRequest) (*model.Customer, error) {
+func (c *CustomerServiceImpl) Create(customer customer2.CreateCustomerRequest) (*model.Customer, error) {
 	err := c.Validate.Struct(customer)
 	if err != nil {
 		return nil, err
@@ -83,7 +83,7 @@ func (c *CustomerServiceImpl) ReadByID(customerID string) (response.CustomerResp
 	}, nil
 }
 
-func (c *CustomerServiceImpl) Update(customerID string, customer request.UpdateCustomerRequest) (*model.Customer, error) {
+func (c *CustomerServiceImpl) Update(customerID string, customer customer2.UpdateCustomerRequest) (*model.Customer, error) {
 	err := c.Validate.Struct(customer)
 	if err != nil {
 		return nil, err
