@@ -10,4 +10,5 @@ type CustomerRepository interface {
 	FindByID(customerID string) (*model.Customer, error)
 	Update(customer *model.Customer) (*model.Customer, error)
 	Delete(customerID string) error
+	SearchByCompany(company string) (map[string]interface{}, error)
 }

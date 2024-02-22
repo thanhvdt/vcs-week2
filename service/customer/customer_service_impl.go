@@ -107,3 +107,7 @@ func (c *CustomerServiceImpl) Update(customerID string, customer customer2.Updat
 func (c *CustomerServiceImpl) Delete(customerID string) error {
 	return c.CustomerRepository.Delete(customerID)
 }
+
+func (c *CustomerServiceImpl) SearchByCompany(company string) (map[string]interface{}, error) {
+	return c.CustomerRepository.SearchByCompany(company)
+}

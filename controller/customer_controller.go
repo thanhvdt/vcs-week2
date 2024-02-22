@@ -111,3 +111,20 @@ func (c *CustomerController) DeleteCustomer(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 	ctx.JSON(http.StatusOK, serverResponse)
 }
+
+func (c *CustomerController) SearchCustomerByCompany(ctx *gin.Context) {
+	log.Info().Msg("Searching Customer By Company")
+	company := ctx.Param("company")
+	customers, err := c.CustomerService.SearchByCompany(company)
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	serverResponse := response.Response{
+		Code:   http.StatusOK,
+		Status: "OK",
+		Data:   customers,
+	}
+	ctx.Header("Content-Type", "application/json")
+	ctx.JSON(http.StatusOK, serverResponse)
+}

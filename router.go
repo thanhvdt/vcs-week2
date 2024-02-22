@@ -14,6 +14,7 @@ func NewRouter(c *Controllers) *gin.Engine {
 		customers.POST("", c.CustomerController.CreateCustomer)
 		customers.PUT("/:customerID", c.CustomerController.UpdateCustomer)
 		customers.DELETE("/:customerID", c.CustomerController.DeleteCustomer)
+		customers.GET("/search-by-company/:company", c.CustomerController.SearchCustomerByCompany)
 	}
 
 	categories := router.Group("/categories")

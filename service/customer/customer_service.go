@@ -12,4 +12,5 @@ type CustomerService interface {
 	ReadByID(customerID string) (response.CustomerResponse, error)
 	Update(customerID string, customer customer.UpdateCustomerRequest) (*model.Customer, error)
 	Delete(customerID string) error
+	SearchByCompany(company string) (map[string]interface{}, error)
 }
