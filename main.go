@@ -9,8 +9,10 @@ import (
 	"github.com/thanhvdt/vcs-week2/model"
 	"github.com/thanhvdt/vcs-week2/repository/category"
 	"github.com/thanhvdt/vcs-week2/repository/customer"
+	"github.com/thanhvdt/vcs-week2/repository/product"
 	category2 "github.com/thanhvdt/vcs-week2/service/category"
 	customer2 "github.com/thanhvdt/vcs-week2/service/customer"
+	product2 "github.com/thanhvdt/vcs-week2/service/product"
 	"net/http"
 )
 
@@ -27,9 +29,14 @@ func main() {
 	categoryService := category2.NewCategoryService(categoryRepository, validate)
 	categoryController := controller.NewCategoryController(categoryService)
 
+	productRepository := product.NewProductRepository(db)
+	productService := product2.NewProductService(productRepository, validate)
+	productController := controller.NewProductController(productService)
+
 	controllers := &Controllers{
 		CustomerController: customerController,
 		CategoryController: categoryController,
+		ProductController:  productController,
 	}
 	routes := NewRouter(controllers)
 

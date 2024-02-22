@@ -25,5 +25,11 @@ func NewRouter(c *Controllers) *gin.Engine {
 		categories.DELETE("/:categoryID", c.CategoryController.DeleteCategory)
 	}
 
+	products := router.Group("/products")
+	{
+		products.GET("", c.ProductController.GetProductsWithSupplier)
+		products.GET("/above-average-price", c.ProductController.GetProductAboveAveragePrice)
+	}
+
 	return router
 }
