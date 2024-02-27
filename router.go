@@ -30,6 +30,11 @@ func NewRouter(c *Controllers) *gin.Engine {
 	{
 		products.GET("", c.ProductController.GetProductsWithSupplier)
 		products.GET("/above-average-price", c.ProductController.GetProductAboveAveragePrice)
+		products.GET("/elastic", c.ProductController.GetAllInElasticSearch)
+		products.GET("/elastic/:id", c.ProductController.GetByIdInElasticSearch)
+		products.POST("/elastic", c.ProductController.CreateInElasticSearch)
+		products.PUT("/elastic/:id", c.ProductController.UpdateInElasticSearch)
+		products.DELETE("/elastic/:id", c.ProductController.DeleteInElasticSearch)
 	}
 
 	return router

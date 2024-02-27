@@ -112,7 +112,7 @@ func main() {
 	categoryService := categoryservice.NewCategoryService(categoryRepository, validate)
 	categoryController := controller.NewCategoryController(categoryService)
 
-	productRepository := product.NewProductRepository(db)
+	productRepository := product.NewProductRepository(db, es)
 	productService := productservice.NewProductService(productRepository, validate)
 	productController := controller.NewProductController(productService)
 

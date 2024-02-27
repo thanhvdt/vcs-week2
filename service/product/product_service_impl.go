@@ -22,3 +22,23 @@ func (p *ProductServiceImpl) GetProductsWithSupplier() ([]model.Product, error) 
 func (p *ProductServiceImpl) GetProductAboveAveragePrice() ([]model.Product, error) {
 	return p.productRepository.GetProductAboveAveragePrice()
 }
+
+func (p *ProductServiceImpl) UpdateInElasticSearch(docID string, updateFields map[string]interface{}) error {
+	return p.productRepository.UpdateInElasticSearch(docID, updateFields)
+}
+
+func (p *ProductServiceImpl) CreateInElasticSearch(document *map[string]interface{}) (string, error) {
+	return p.productRepository.CreateInElasticSearch(document)
+}
+
+func (p *ProductServiceImpl) GetAllInElasticSearch() (map[string]interface{}, error) {
+	return p.productRepository.GetAllInElasticSearch()
+}
+
+func (p *ProductServiceImpl) GetByIdInElasticSearch(docID string) (map[string]interface{}, error) {
+	return p.productRepository.GetByIdInElasticSearch(docID)
+}
+
+func (p *ProductServiceImpl) DeleteInElasticSearch(docID string) error {
+	return p.productRepository.DeleteInElasticSearch(docID)
+}
