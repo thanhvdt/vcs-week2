@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 )
 
 func NewRouter(c *Controllers) *gin.Engine {
@@ -36,6 +38,8 @@ func NewRouter(c *Controllers) *gin.Engine {
 		products.PUT("/elastic/:id", c.ProductController.UpdateInElasticSearch)
 		products.DELETE("/elastic/:id", c.ProductController.DeleteInElasticSearch)
 	}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return router
 }

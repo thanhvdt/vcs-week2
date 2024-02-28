@@ -1,0 +1,190 @@
+basePath: /
+definitions:
+  customer.CreateCustomerRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      company_name:
+        type: string
+      contact_name:
+        type: string
+      contact_title:
+        type: string
+      country:
+        type: string
+      customer_id:
+        type: string
+      fax:
+        type: string
+      phone:
+        type: string
+      postal_code:
+        type: string
+      region:
+        type: string
+    required:
+    - company_name
+    - customer_id
+    type: object
+  customer.UpdateCustomerRequest:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      company_name:
+        type: string
+      contact_name:
+        type: string
+      contact_title:
+        type: string
+      country:
+        type: string
+      fax:
+        type: string
+      phone:
+        type: string
+      postal_code:
+        type: string
+      region:
+        type: string
+    required:
+    - company_name
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server.
+  title: Swagger Northwind APi
+  version: "1.0"
+paths:
+  /customers:
+    get:
+      description: Read all customers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Read all customers
+      tags:
+      - Customer
+    post:
+      consumes:
+      - application/json
+      description: Create a new customer
+      parameters:
+      - description: Customer object that needs to be added
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.CreateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Create a new customer
+      tags:
+      - Customer
+  /customers/{customerID}:
+    delete:
+      description: Delete customer
+      parameters:
+      - description: Customer ID
+        in: path
+        name: customerID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Delete customer
+      tags:
+      - Customer
+    get:
+      description: Read customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: customerID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Read customer by ID
+      tags:
+      - Customer
+    put:
+      consumes:
+      - application/json
+      description: Update customer
+      parameters:
+      - description: Customer ID
+        in: path
+        name: customerID
+        required: true
+        type: string
+      - description: Customer object that needs to be updated
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.UpdateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Update customer
+      tags:
+      - Customer
+  /customers/search-by-company/{company}:
+    get:
+      description: Search customer by company
+      parameters:
+      - description: Company
+        in: path
+        name: company
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Search customer by company
+      tags:
+      - Customer
+swagger: "2.0"

@@ -23,6 +23,15 @@ import (
 
 var es *elasticsearch.Client
 
+// @title           Swagger Northwind APi
+// @version         1.0
+// @description     This is a sample server.
+
+// @host      localhost:8080
+// @BasePath  /
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	zerolog.Info().Msg("Server Started!")
 	var err error
